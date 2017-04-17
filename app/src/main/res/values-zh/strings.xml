@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">幸运日</string>
+    <string name="l_lucky_for">宜</string>
+    <string name="l_unlucky_for">忌</string>
+    <string name="l_back_to_today">返回今日</string>
+</resources>

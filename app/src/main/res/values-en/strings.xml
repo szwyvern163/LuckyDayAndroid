@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LuckyDay</string>
+    <string name="l_lucky_for">Lucky For</string>
+    <string name="l_unlucky_for">UnLucky For</string>
+    <string name="l_back_to_today">Back To Today</string>
+</resources>
