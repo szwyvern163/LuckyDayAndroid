@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.wangyue.luckyday.MainActivity"
+    tools:context="com.wangyue.luckyday.MainActivity"
     android:orientation="horizontal"
     android:weightSum="1">
 
@@ -31,22 +31,21 @@
             android:text="@string/l_back_to_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="normal|bold"
-            android:layout_alignParentRight="false"
+
             android:clickable="true"
             android:visibility="invisible"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:id="@+id/backToTodayText" />
         <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:id="@+id/showDateText"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="normal|bold" />
 
@@ -56,9 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/showDateText"
                 android:id="@+id/labelLucky"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:textStyle="normal|bold"
-                android:textSize="16sp"
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
@@ -69,6 +67,7 @@
                 android:layout_below="@+id/labelLucky"
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@android:color/black" />
 
         <TextView
@@ -77,9 +76,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/labelUnLucky"
             android:layout_below="@+id/showLucky"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:textStyle="normal|bold"
-            android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark" />
 
         <TextView
@@ -90,6 +88,7 @@
             android:layout_below="@+id/labelUnLucky"
             android:layout_marginTop="3dp"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@android:color/black" />
 
     </RelativeLayout>
