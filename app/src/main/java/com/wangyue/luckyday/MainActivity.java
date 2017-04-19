@@ -7,6 +7,7 @@ import android.os.LocaleList;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                System.out.println(year +"  "+month+"  "+dayOfMonth);
+                Log.d("date selected",year +"  "+month+"  "+dayOfMonth);
                 CalendarDay day = CalendarDay.from(year,month,dayOfMonth);
                 setCalendarViewDate(day.getDate());
                 refreshDesc(day.getDate());
@@ -138,9 +139,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                     e.printStackTrace();
                 }
 
-                //System.out.println(datePickerDialog);
+
                 datePickerDialog.show();
-                //   System.out.println(currentShowMonth);
+
 
             }
         };
@@ -188,25 +189,29 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-        System.out.println("locale kkk");
-        Locale localea = Locale.GERMAN;
-        System.out.println(localea);
-       // System.out.println(locale.getCountry().toString());
+       /* Log.d("locale","locale kkk");
+        Locale localea = Locale.getDefault();
+        Log.d("locale",localea.toString());
+       // Log.d(locale.getCountry().toString());
         //locale = getResources().getConfiguration().getLocales().get(0);
-        System.out.println("run api is "+Build.VERSION.SDK_INT);
-        System.out.println("build api is "+Build.VERSION_CODES.N);
+        Log.d("locale","run api is "+Build.VERSION.SDK_INT);
+        Log.d("locale","build api is "+Build.VERSION_CODES.N);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             LocaleList al = getResources().getConfiguration().getLocales();
-            System.out.println(al.toString());
+            Log.d("locale",al.toString());
             localea = getResources().getConfiguration().getLocales().get(0);
-            System.out.println(localea);
+            Log.d("locale",localea.toString());
         }else
         {
-            //locale = MainActivity.this.getResources().getConfiguration().locale;
+            localea = MainActivity.this.getResources().getConfiguration().locale;
         }
-        System.out.println(localea.getCountry());
-        System.out.println("locale rrrkkk");
+        localea = MainActivity.this.getResources().getConfiguration().locale;
+        Log.d("locale",localea.getCountry());
+        Log.d("locale",localea.getLanguage());
+        Log.d("locale","locale rrrkkk");
+*/
+
 
         Map<String, List<String>> map = getByDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH),"zh_CN");
         String luckyStr = map.get(DO).toString();
