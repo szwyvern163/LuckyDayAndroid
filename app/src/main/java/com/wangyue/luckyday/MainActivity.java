@@ -8,8 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -60,7 +63,24 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setContentView(R.layout.activity_main);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            getSupportActionBar().setTitle(R.string.app_name);
+           // getSupportActionBar().setTitle(R.string.app_name);
+            //actionBar.setLogo();
+            //actionBar.setDisplayUseLogoEnabled(true);
+
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+
+            /*View customView = LayoutInflater.from(this).inflate(  R.layout.activity_detail_info, new LinearLayout(this), false);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setCustomView(customView);
+            customView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ada","adsggagag");//Toast.makeText(MainActivity.this, "....", 10000).show();
+                }
+            });
+*/
         }
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.setOnDateChangedListener(this);
@@ -93,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         backToToday = (TextView)findViewById(R.id.backToTodayText);
 
 
-
+        //回到今日按钮的事件
         backToToday.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -189,31 +209,24 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-       /* Log.d("locale","locale kkk");
-        Locale localea = Locale.getDefault();
-        Log.d("locale",localea.toString());
-       // Log.d(locale.getCountry().toString());
-        //locale = getResources().getConfiguration().getLocales().get(0);
-        Log.d("locale","run api is "+Build.VERSION.SDK_INT);
-        Log.d("locale","build api is "+Build.VERSION_CODES.N);
+        Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
-            LocaleList al = getResources().getConfiguration().getLocales();
-            Log.d("locale",al.toString());
-            localea = getResources().getConfiguration().getLocales().get(0);
-            Log.d("locale",localea.toString());
+            //LocaleList al = getResources().getConfiguration().getLocales();
+
+            locale = getResources().getConfiguration().getLocales().get(0);
+
         }else
         {
-            localea = MainActivity.this.getResources().getConfiguration().locale;
+            locale = MainActivity.this.getResources().getConfiguration().locale;
         }
-        localea = MainActivity.this.getResources().getConfiguration().locale;
-        Log.d("locale",localea.getCountry());
-        Log.d("locale",localea.getLanguage());
-        Log.d("locale","locale rrrkkk");
-*/
 
-
-        Map<String, List<String>> map = getByDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH),"zh_CN");
+        String lang = "en_US";
+        lang = "zh_CN";
+        if(locale.getLanguage().equalsIgnoreCase("zh")){
+            lang = "zh_CN";
+        }
+        Map<String, List<String>> map = getByDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH),lang);
         String luckyStr = map.get(DO).toString();
         luckyStr = luckyStr.substring(1,luckyStr.length()-1);
 
