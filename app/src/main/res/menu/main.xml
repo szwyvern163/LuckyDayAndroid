@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+tools:context="com.wangyue.luckyday.MainActivity" >
+
+<item
+    android:id="@+id/actionbar_info"
+    android:icon="@android:drawable/ic_menu_info_details"
+
+    android:title="@string/l_lucky_for"
+    app:showAsAction="ifRoom" />
+
+</menu>

@@ -27,7 +27,9 @@
             </intent-filter
             -->
         </activity>
-        <activity android:name=".DetailInfoActivity"></activity>
+        <activity android:name=".DetailInfoActivity"
+            android:parentActivityName="com.wangyue.luckyday.MainActivity">
+            </activity>
     </application>
 
 </manifest>

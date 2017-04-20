@@ -1,6 +1,7 @@
 package com.wangyue.luckyday;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +11,15 @@ import android.text.TextUtils;
 import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -71,17 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             actionBar.setDisplayShowHomeEnabled(false);
             actionBar.setDisplayUseLogoEnabled(false);
 
-            //// TODO: 2017/4/20 设置主界面点击actionbar的事件,显示wiki的介绍页面 
-            /*View customView = LayoutInflater.from(this).inflate(  R.layout.activity_detail_info, new LinearLayout(this), false);
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setCustomView(customView);
-            customView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("ada","adsggagag");//Toast.makeText(MainActivity.this, "....", 10000).show();
-                }
-            });
-*/
+
         }
 
 
@@ -123,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
 
 
-        // todo 英文翻译没有准备好之前,强制读取中文数据
+        //
         //langStr = "zh_CN";
         if(curLocale.getLanguage().equalsIgnoreCase("zh")){
             //如果是zh,显示中文界面
@@ -219,8 +216,35 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
 
+    //显示标题栏上的信息图标
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //点击显示详细信息
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionbar_info:
+                //Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show();
+                //显示DetailInfoActivity
 
 
+
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, DetailInfoActivity.class);
+                MainActivity.this.startActivity(intent);
+
+                break;
+
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG);
 

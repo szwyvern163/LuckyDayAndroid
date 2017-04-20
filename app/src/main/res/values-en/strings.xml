@@ -4,4 +4,6 @@
     <string name="l_lucky_for">Lucky For</string>
     <string name="l_unlucky_for">UnLucky For</string>
     <string name="l_back_to_today">Back To Today</string>
+    <string name="l_info">Info</string>
+    <string name="detail_info">"Tung Shing originated from Wong Lik (黃曆, the \"Yellow Calendar\"), which legend attributes to the Yellow Emperor. It has changed its form numerous times throughout the years during all the dynasties; the latest version was said to have been edited under the Qing dynasty and was called the Tung Shu (通書). Tung (通) means \"all\", Shu (書) means \"book\", so Tung Shu literally meant \"All-knowing Book\". However, in Cantonese Chinese and Mandarin Chinese, the pronunciation of the word for \"book\" is a homophone of a word for defeated (輸), so Tung Shu sounded like \"Defeated in All Things\" (通輸). Therefore, the name was changed to Tung Shing (通勝), which means \"Victorious in All Things\"\n\nMost of the contents of the book deals with what is suitable to do on each day. Some Chinese families still follow these days for wedding ceremonies, funerals, etc.\n\nThe most common use of Tung Shing is in choosing a wedding date. Tung Shing contains information on the auspicious and inauspicious days for weddings and/or engagements. "</string>
 </resources>
