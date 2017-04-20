@@ -121,8 +121,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             curLocale = MainActivity.this.getResources().getConfiguration().locale;
         }
 
-        //showLucky.setMovementMethod(ScrollingMovementMethod.getInstance());
-        //showUnLucky.setMovementMethod(ScrollingMovementMethod.getInstance());
+
 
         // todo 英文翻译没有准备好之前,强制读取中文数据
         //langStr = "zh_CN";
