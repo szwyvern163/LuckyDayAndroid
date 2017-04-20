@@ -21,12 +21,14 @@
         app:mcv_selectionColor="@color/colorPrimaryDark"
         app:mcv_arrowColor="@color/colorPrimaryDark"
         app:mcv_firstDayOfWeek="sunday" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/calendarView"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
+
         <TextView
             android:text="@string/l_back_to_today"
             android:layout_width="wrap_content"
@@ -48,12 +50,21 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="normal|bold" />
-
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/showDateText"
+            android:scrollbars="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
             <TextView
                 android:text="@string/l_lucky_for"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/showDateText"
+
                 android:id="@+id/labelLucky"
                 android:layout_marginTop="8dp"
                 android:textStyle="normal|bold"
@@ -90,6 +101,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/black" />
+            </RelativeLayout>
+        </ScrollView>
 
     </RelativeLayout>
 </RelativeLayout>

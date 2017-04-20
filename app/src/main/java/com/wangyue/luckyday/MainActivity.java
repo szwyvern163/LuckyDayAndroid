@@ -3,16 +3,15 @@ package com.wangyue.luckyday;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.LocaleList;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.text.method.MovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -21,6 +20,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import org.ini4j.Ini;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
     View.OnClickListener calendarTitleClicked ;
 
+    Locale curLocale = Locale.US;//默认语言是英语
+    String langStr = "en_US";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +65,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setContentView(R.layout.activity_main);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-           // getSupportActionBar().setTitle(R.string.app_name);
-            //actionBar.setLogo();
-            //actionBar.setDisplayUseLogoEnabled(true);
+ 
 
             actionBar.setDisplayHomeAsUpEnabled(false);
             actionBar.setDisplayShowHomeEnabled(false);
             actionBar.setDisplayUseLogoEnabled(false);
 
+            //// TODO: 2017/4/20 设置主界面点击actionbar的事件,显示wiki的介绍页面 
             /*View customView = LayoutInflater.from(this).inflate(  R.layout.activity_detail_info, new LinearLayout(this), false);
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setCustomView(customView);
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             });
 */
         }
+
+
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
@@ -104,13 +107,42 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         //Setup initial text
         showDateText = (TextView) findViewById(R.id.showDateText);
-        //showDateText.setText(getSelectedDatesString());
-
 
         showLucky = (TextView)findViewById(R.id.showLucky);
         showUnLucky = (TextView)findViewById(R.id.showUnLucky);
 
         backToToday = (TextView)findViewById(R.id.backToTodayText);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            curLocale = getResources().getConfiguration().getLocales().get(0);
+        }else
+        {
+            curLocale = MainActivity.this.getResources().getConfiguration().locale;
+        }
+
+        //showLucky.setMovementMethod(ScrollingMovementMethod.getInstance());
+        //showUnLucky.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        // todo 英文翻译没有准备好之前,强制读取中文数据
+        //langStr = "zh_CN";
+        if(curLocale.getLanguage().equalsIgnoreCase("zh")){
+            //如果是zh,显示中文界面
+            langStr = "zh_CN";
+        }else{
+            //否则默认是英语,需要把界面设置为三行,然后显示省略号
+            showLucky.setMaxLines(3);
+            showLucky.setEllipsize(TextUtils.TruncateAt.END);
+            showUnLucky.setMaxLines(3);
+            showUnLucky.setEllipsize(TextUtils.TruncateAt.END);
+        }
+
+
+        // TODO: 2017/4/20  点击"宜",弹出具体解释
+        showLucky.setOnClickListener(showLuckyDetailClickListener);
+
+        // TODO: 2017/4/20  点击"忌",弹出具体解释
+        showUnLucky.setOnClickListener(showLuckyDetailClickListener);
 
 
         //回到今日按钮的事件
@@ -138,12 +170,11 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             }
         };
 
-
+        //设置点击日历标题栏,弹出日历选择框
         calendarTitleClicked = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Date selectedDate = calendarView.getSelectedDate().getDate();
-                //DatePicker datePicker = new DatePicker();
+                
                 datePickerDialog = new DatePickerDialog(
                         //MainActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert, dateSetListener , currentShowMonth.getYear(), currentShowMonth.getMonth(), currentShowMonth.getDay()
                         MainActivity.this, 0, dateSetListener , currentShowMonth.getYear(), currentShowMonth.getMonth(), currentShowMonth.getDay()
@@ -165,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
             }
         };
+        
         calendarView.setOnTitleClickListener(calendarTitleClicked);
 
 
@@ -184,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     @Override
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
         currentShowMonth = date;
-        //getSupportActionBar().setTitle("LuckyDay");
+       
     }
 
 
@@ -209,24 +241,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-        Locale locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
-            //LocaleList al = getResources().getConfiguration().getLocales();
-
-            locale = getResources().getConfiguration().getLocales().get(0);
-
-        }else
-        {
-            locale = MainActivity.this.getResources().getConfiguration().locale;
-        }
-
-        String lang = "en_US";
-        lang = "zh_CN";
-        if(locale.getLanguage().equalsIgnoreCase("zh")){
-            lang = "zh_CN";
-        }
-        Map<String, List<String>> map = getByDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH),lang);
+        Map<String, List<String>> map = getByDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH),langStr);
         String luckyStr = map.get(DO).toString();
         luckyStr = luckyStr.substring(1,luckyStr.length()-1);
 
@@ -245,8 +261,51 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         }
 
 
+
     }
 
+
+
+
+    View.OnClickListener showLuckyDetailClickListener = new View.OnClickListener() {
+
+
+        @Override
+        public void onClick(View v) {
+
+            TextView toShow = (TextView) v;
+
+            //// TODO: 2017/4/20 要把显示改为一个一个标签,为每一个标签设施点击事件,后续再做
+            //现在先做成英文状态下展开和收缩
+            String lang = "en_US";
+            // TODO: 2017/4/20 等英文翻译下来了要取消这一行
+            //lang = "zh_CN";
+            if (curLocale.getLanguage().equalsIgnoreCase("zh")) {
+                //如果是zh,显示中文界面
+                lang = "zh_CN";
+
+            } else {//英文才需要伸缩
+                if (TextUtils.TruncateAt.END.equals(toShow.getEllipsize())) {
+
+                    //详情展开
+                    toShow.setSingleLine(false);
+                    toShow.setEllipsize(null);
+
+                } else {
+
+                    //已经展开了,要收缩
+                    toShow.setMaxLines(3);
+                    toShow.setEllipsize(TextUtils.TruncateAt.END);
+
+                }
+
+
+            }
+
+        }
+    };
+
+    View.OnClickListener showUnLuckyDetailClickListener = showLuckyDetailClickListener;
 
     //下面是读数据的代码段
     final static String DO = "DO";
