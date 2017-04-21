@@ -46,7 +46,7 @@ public class FlashScreenActivity extends AppCompatActivity {
 
 
 
-        timer.schedule(task, 1000 * 3); // 3秒后执行
+        timer.schedule(task, 1000 * 2); // 3秒后执行
 
     }
 }

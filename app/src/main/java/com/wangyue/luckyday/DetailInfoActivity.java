@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class DetailInfoActivity extends AppCompatActivity {
 
 
@@ -42,10 +44,20 @@ public class DetailInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-            //    Log.d("dsg","666666666");
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
+
+
+                Intent resultIntent = new Intent();
+                long ddd = getIntent().getLongExtra(MainActivity.selectDateTag,new Date().getTime());
+
+                resultIntent.putExtra(MainActivity.selectDateTag, ddd);
+
+                setResult(RESULT_CANCELED, resultIntent);
+                finish();
+/*
+              Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     TaskStackBuilder.create(this)
                             .addNextIntentWithParentStack(upIntent)
@@ -54,6 +66,8 @@ public class DetailInfoActivity extends AppCompatActivity {
                     upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     NavUtils.navigateUpTo(this, upIntent);
                 }
+
+*/
                 break;
 
             default:

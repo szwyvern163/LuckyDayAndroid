@@ -1,5 +1,6 @@
 package com.wangyue.luckyday;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.d("date selected",year +"  "+month+"  "+dayOfMonth);
+               // Log.d("date selected",year +"  "+month+"  "+dayOfMonth);
                 CalendarDay day = CalendarDay.from(year,month,dayOfMonth);
                 setCalendarViewDate(day.getDate());
                 refreshDesc(day.getDate());
@@ -224,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         return super.onCreateOptionsMenu(menu);
     }
 
+    final static int DetailInfoRequestCodeActionBarInfo = 5;
+    final static String selectDateTag = "selectDate";
     //点击显示详细信息
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -236,7 +239,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, DetailInfoActivity.class);
-                MainActivity.this.startActivity(intent);
+                intent.putExtra(MainActivity.selectDateTag,calendarView.getSelectedDate().getDate().getTime());
+               // MainActivity.this.startActivity(intent);
+                MainActivity.this.startActivityForResult(intent,DetailInfoRequestCodeActionBarInfo);
 
                 break;
 
@@ -244,6 +249,22 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == DetailInfoRequestCodeActionBarInfo
+                && resultCode == Activity.RESULT_CANCELED) {
+            if(null != data) {
+                long dateSelected = data.getLongExtra(selectDateTag, new Date().getTime());
+                refreshDesc(new Date(dateSelected));
+            }
+
+        }
     }
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance(SimpleDateFormat.LONG);
